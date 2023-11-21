@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Layout } from 'antd';
+import Header from './Header';
+import SideMenu from './SideMenu';
+import Container from './Container';
+import Footer from './Footer';
+import AddProduct from './AddProduct';
+import ViewProduct from './ViewProduct';
+import DeleteProduct from './DeleteProduct';
 
-function App() {
+const { Sider, Content } = Layout;
+
+const App = () => {
+  const [isMenuCollapsed, setMenuCollapsed] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuCollapsed(!isMenuCollapsed);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Sider collapsed={isMenuCollapsed}>
+        <SideMenu onToggle={toggleMenu} />
+      </Sider>
+      <Layout>
+        <Header />
+        <Content>
+          <Container>
+            {/* Use conditional rendering based on selected menu option */}
+            <ViewProduct />
+            <AddProduct />
+            <DeleteProduct />
+          </Container>
+        </Content>
+        <Footer />
+      </Layout>
+    </Layout>
   );
-}
+};
 
 export default App;
